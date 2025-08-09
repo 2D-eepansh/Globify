@@ -2097,6 +2097,32 @@ nav ul li a:hover::after {
   transform: scale(1.05) translateY(-10px);
 }
 
+.tier-card.starter-tier {
+  border: 2px solid #8e44ad !important;
+  background: linear-gradient(135deg, rgba(142, 68, 173, 0.1) 0%, rgba(155, 89, 182, 0.05) 100%) !important;
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(142, 68, 173, 0.3) !important;
+}
+
+.tier-card.starter-tier:hover {
+  transform: scale(1.05) translateY(-10px);
+  border-color: #8e44ad !important;
+  box-shadow: 0 25px 50px rgba(142, 68, 173, 0.4) !important;
+}
+
+.tier-card.starter-tier .tier-badge {
+  background: linear-gradient(135deg, #8e44ad, #9b59b6) !important;
+  color: white !important;
+}
+
+.tier-card.starter-tier .tier-price {
+  color: #8e44ad !important;
+}
+
+.tier-card.starter-tier .tier-features i {
+  color: #8e44ad !important;
+}
+
 .tier-badge {
   position: absolute;
   top: -10px;
