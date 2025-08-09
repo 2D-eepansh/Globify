@@ -983,54 +983,440 @@
                 });
             }
 
-            // Add click handlers for buttons
+            // Add click handlers for buttons with specific functionality
             document.querySelectorAll('.view-btn, .view-all-btn, .filter-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    if (this.textContent.includes('View Matches')) {
+                    const buttonText = this.textContent.trim();
+                    
+                    if (buttonText.includes('View Matches')) {
                         window.location.href = 'connectpro.html';
+                    } else if (buttonText.includes('Filter Industries')) {
+                        showIndustryFilterModal();
+                    } else if (buttonText.includes('View All Events')) {
+                        showEventsModal();
+                    } else if (buttonText.includes('View Full Report')) {
+                        showAnalyticsModal();
+                    } else if (buttonText.includes('Open Messenger')) {
+                        openGlobifyMessenger();
                     } else {
-                        // Show demo message for other buttons
-                        const feedback = document.createElement('div');
-                        feedback.style.cssText = `
-                            position: fixed;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            background: var(--gold-primary);
-                            color: var(--bg-charcoal);
-                            padding: 1rem 2rem;
-                            border-radius: 10px;
-                            font-weight: 600;
-                            z-index: 10000;
-                            animation: fadeInOut 2s ease-in-out forwards;
-                        `;
-                        feedback.textContent = 'Feature coming soon!';
-                        
-                        const style = document.createElement('style');
-                        style.textContent = `
-                            @keyframes fadeInOut {
-                                0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-                                20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-                                80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-                                100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-                            }
-                        `;
-                        
-                        if (!document.querySelector('#demo-feedback-styles')) {
-                            style.id = 'demo-feedback-styles';
-                            document.head.appendChild(style);
-                        }
-
-                        document.body.appendChild(feedback);
-                        
-                        setTimeout(() => {
-                            if (feedback.parentNode) {
-                                feedback.parentNode.removeChild(feedback);
-                            }
-                        }, 2000);
+                        // Generic info modal for other buttons
+                        showInfoModal(buttonText);
                     }
                 });
             });
+
+            // Enhanced modal functions
+            function showIndustryFilterModal() {
+                const modal = createInfoModal('Industry Filter', `
+                    <div class="industry-filter-content">
+                        <h4>Filter by Industries:</h4>
+                        <div class="filter-checkboxes">
+                            <label><input type="checkbox" checked> Technology (43%)</label>
+                            <label><input type="checkbox" checked> Fintech (28%)</label>
+                            <label><input type="checkbox"> Healthcare (15%)</label>
+                            <label><input type="checkbox"> E-commerce (8%)</label>
+                            <label><input type="checkbox"> Manufacturing (6%)</label>
+                        </div>
+                        <p><strong>Current Matches:</strong> 247 companies match your selected criteria</p>
+                        <button class="apply-filter-btn">Apply Filters</button>
+                    </div>
+                `);
+            }
+
+            function showEventsModal() {
+                const modal = createInfoModal('Upcoming Events & Networking', `
+                    <div class="events-content">
+                        <div class="event-list">
+                            <div class="event-detail">
+                                <h4>🚀 DevCrunch Disrupt 2024</h4>
+                                <p><strong>Date:</strong> August 25-27, 2024</p>
+                                <p><strong>Location:</strong> San Francisco, CA</p>
+                                <p><strong>Expected Attendees:</strong> 15,000+ entrepreneurs and investors</p>
+                                <p><strong>Relevant Matches:</strong> 45 potential partners attending</p>
+                            </div>
+                            <div class="event-detail">
+                                <h4>💼 London Investor Meetup</h4>
+                                <p><strong>Date:</strong> September 12, 2024</p>
+                                <p><strong>Location:</strong> London, UK</p>
+                                <p><strong>Focus:</strong> Fintech & AI Startups</p>
+                                <p><strong>Relevant Matches:</strong> 23 investors in your sector</p>
+                            </div>
+                            <div class="event-detail">
+                                <h4>🤖 AI Summit Virtual</h4>
+                                <p><strong>Date:</strong> September 18, 2024</p>
+                                <p><strong>Location:</strong> Virtual Event</p>
+                                <p><strong>Focus:</strong> AI Innovation & Investment</p>
+                                <p><strong>Relevant Matches:</strong> 67 AI-focused companies</p>
+                            </div>
+                        </div>
+                        <button class="register-events-btn">Register for Events</button>
+                    </div>
+                `);
+            }
+
+            function showAnalyticsModal() {
+                const modal = createInfoModal('Growth Analytics Report', `
+                    <div class="analytics-content">
+                        <h4>📊 Performance Summary (Last 30 Days)</h4>
+                        <div class="analytics-grid">
+                            <div class="metric">
+                                <h5>New Connections</h5>
+                                <p class="metric-value">+40 <span class="growth-up">↗ 32%</span></p>
+                            </div>
+                            <div class="metric">
+                                <h5>Profile Views</h5>
+                                <p class="metric-value">1,247 <span class="growth-up">↗ 18%</span></p>
+                            </div>
+                            <div class="metric">
+                                <h5>Match Success Rate</h5>
+                                <p class="metric-value">76% <span class="growth-up">↗ 8%</span></p>
+                            </div>
+                            <div class="metric">
+                                <h5>Response Rate</h5>
+                                <p class="metric-value">84% <span class="growth-up">↗ 12%</span></p>
+                            </div>
+                        </div>
+                        <h4>🎯 Top Performing Sectors</h4>
+                        <p><strong>1. AI & Machine Learning:</strong> 67% match success</p>
+                        <p><strong>2. Fintech Solutions:</strong> 59% match success</p>
+                        <p><strong>3. Sustainable Tech:</strong> 71% match success</p>
+                        <button class="download-report-btn">Download Full Report</button>
+                    </div>
+                `);
+            }
+
+            function openGlobifyMessenger() {
+                // Open the existing chatbot
+                if (window.GlobifyChatbot && typeof window.GlobifyChatbot === 'function') {
+                    const chatbot = new window.GlobifyChatbot();
+                    chatbot.openChat();
+                } else {
+                    // Fallback: Create a simple messenger interface
+                    showMessengerModal();
+                }
+            }
+
+            function showMessengerModal() {
+                const modal = createInfoModal('Globify Messenger', `
+                    <div class="messenger-content">
+                        <div class="messenger-header">
+                            <h4>💬 Recent Conversations</h4>
+                        </div>
+                        <div class="conversation-list">
+                            <div class="conversation-item active">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b9c07918?w=40&h=40&fit=crop&crop=face" alt="Sarah">
+                                <div class="conv-info">
+                                    <h5>Sarah Johnson</h5>
+                                    <p>Hi! I'm interested in discussing a potential partnership...</p>
+                                    <span class="time">5 min ago</span>
+                                </div>
+                            </div>
+                            <div class="conversation-item">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Michael">
+                                <div class="conv-info">
+                                    <h5>Michael Chen</h5>
+                                    <p>Great to connect! When can we schedule a call?</p>
+                                    <span class="time">20 min ago</span>
+                                </div>
+                            </div>
+                            <div class="conversation-item">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="Alex">
+                                <div class="conv-info">
+                                    <h5>Alex Rivera</h5>
+                                    <p>Thanks for the proposal. Our team is reviewing it.</p>
+                                    <span class="time">1 hour ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="messenger-actions">
+                            <button class="compose-btn">✏️ Compose New Message</button>
+                            <button class="ai-assistant-btn" onclick="window.open('Globify-Chatbot/index.html', '_blank')">🤖 AI Assistant</button>
+                        </div>
+                    </div>
+                `);
+            }
+
+            function showInfoModal(buttonText) {
+                const modal = createInfoModal('Information', `
+                    <div class="info-content">
+                        <h4>📋 ${buttonText}</h4>
+                        <p>This feature provides detailed insights and functionality for your Globify dashboard.</p>
+                        <p>Current status: <strong>Fully operational</strong></p>
+                        <p>Last updated: <strong>Today</strong></p>
+                        <button class="ok-btn">Got it!</button>
+                    </div>
+                `);
+            }
+
+            function createInfoModal(title, content) {
+                // Remove existing modal
+                const existingModal = document.querySelector('.info-modal');
+                if (existingModal) {
+                    existingModal.remove();
+                }
+
+                const modal = document.createElement('div');
+                modal.className = 'info-modal';
+                modal.innerHTML = `
+                    <div class="modal-overlay" onclick="this.parentElement.remove()"></div>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>${title}</h3>
+                            <button class="modal-close" onclick="this.parentElement.parentElement.remove()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ${content}
+                        </div>
+                    </div>
+                `;
+
+                // Add styles for the info modal
+                const style = document.createElement('style');
+                style.textContent = `
+                    .info-modal {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100vw;
+                        height: 100vh;
+                        z-index: 10000;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: fadeIn 0.3s ease-out;
+                    }
+
+                    .info-modal .modal-overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.7);
+                        backdrop-filter: blur(5px);
+                    }
+
+                    .info-modal .modal-content {
+                        position: relative;
+                        background: rgba(13, 13, 13, 0.95);
+                        border: 2px solid var(--gold-primary);
+                        border-radius: 20px;
+                        max-width: 600px;
+                        width: 90%;
+                        max-height: 80vh;
+                        overflow-y: auto;
+                        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+                        animation: slideInUp 0.3s ease-out;
+                    }
+
+                    .info-modal .modal-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 1.5rem;
+                        border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+                        background: rgba(212, 175, 55, 0.1);
+                    }
+
+                    .info-modal .modal-header h3 {
+                        color: var(--gold-primary);
+                        font-family: 'Montserrat', sans-serif;
+                        font-weight: 800;
+                        margin: 0;
+                    }
+
+                    .info-modal .modal-close {
+                        background: none;
+                        border: none;
+                        color: var(--white-text);
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        padding: 0.5rem;
+                        border-radius: 50%;
+                        transition: all 0.3s ease;
+                    }
+
+                    .info-modal .modal-close:hover {
+                        background: rgba(212, 175, 55, 0.2);
+                        color: var(--gold-primary);
+                    }
+
+                    .info-modal .modal-body {
+                        padding: 2rem;
+                        color: var(--white-text);
+                        line-height: 1.6;
+                    }
+
+                    .info-modal .modal-body h4 {
+                        color: var(--gold-primary);
+                        margin-bottom: 1rem;
+                    }
+
+                    .info-modal .modal-body h5 {
+                        color: var(--white-text);
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .filter-checkboxes {
+                        margin: 1rem 0;
+                    }
+
+                    .filter-checkboxes label {
+                        display: block;
+                        margin-bottom: 0.5rem;
+                        cursor: pointer;
+                    }
+
+                    .filter-checkboxes input[type="checkbox"] {
+                        margin-right: 0.5rem;
+                        accent-color: var(--gold-primary);
+                    }
+
+                    .event-detail {
+                        background: rgba(255, 255, 255, 0.05);
+                        padding: 1rem;
+                        border-radius: 10px;
+                        margin-bottom: 1rem;
+                        border-left: 3px solid var(--gold-primary);
+                    }
+
+                    .analytics-grid {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 1rem;
+                        margin: 1rem 0;
+                    }
+
+                    .metric {
+                        background: rgba(255, 255, 255, 0.05);
+                        padding: 1rem;
+                        border-radius: 10px;
+                        text-align: center;
+                    }
+
+                    .metric-value {
+                        font-size: 1.5rem;
+                        font-weight: bold;
+                        color: var(--gold-primary);
+                        margin: 0.5rem 0;
+                    }
+
+                    .growth-up {
+                        color: #27ae60;
+                        font-size: 0.9rem;
+                    }
+
+                    .conversation-list {
+                        max-height: 300px;
+                        overflow-y: auto;
+                        margin: 1rem 0;
+                    }
+
+                    .conversation-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                        padding: 1rem;
+                        background: rgba(255, 255, 255, 0.05);
+                        border-radius: 10px;
+                        margin-bottom: 0.5rem;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    }
+
+                    .conversation-item:hover,
+                    .conversation-item.active {
+                        background: rgba(212, 175, 55, 0.1);
+                        border-left: 3px solid var(--gold-primary);
+                    }
+
+                    .conversation-item img {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+
+                    .conv-info h5 {
+                        margin: 0 0 0.3rem 0;
+                        color: var(--white-text);
+                    }
+
+                    .conv-info p {
+                        margin: 0 0 0.3rem 0;
+                        color: var(--gray-light);
+                        font-size: 0.9rem;
+                    }
+
+                    .conv-info .time {
+                        color: var(--bronze-secondary);
+                        font-size: 0.8rem;
+                    }
+
+                    .messenger-actions {
+                        display: flex;
+                        gap: 1rem;
+                        margin-top: 1rem;
+                    }
+
+                    .apply-filter-btn,
+                    .register-events-btn,
+                    .download-report-btn,
+                    .compose-btn,
+                    .ai-assistant-btn,
+                    .ok-btn {
+                        background: var(--gold-primary);
+                        color: var(--bg-charcoal);
+                        border: none;
+                        padding: 0.8rem 1.5rem;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        flex: 1;
+                    }
+
+                    .apply-filter-btn:hover,
+                    .register-events-btn:hover,
+                    .download-report-btn:hover,
+                    .compose-btn:hover,
+                    .ai-assistant-btn:hover,
+                    .ok-btn:hover {
+                        background: var(--bronze-secondary);
+                        transform: translateY(-2px);
+                    }
+
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+
+                    @keyframes slideInUp {
+                        from { transform: translateY(30px); opacity: 0; }
+                        to { transform: translateY(0); opacity: 1; }
+                    }
+
+                    @media (max-width: 768px) {
+                        .analytics-grid {
+                            grid-template-columns: 1fr;
+                        }
+                        
+                        .messenger-actions {
+                            flex-direction: column;
+                        }
+                    }
+                `;
+
+                if (!document.querySelector('#info-modal-styles')) {
+                    style.id = 'info-modal-styles';
+                    document.head.appendChild(style);
+                }
+
+                document.body.appendChild(modal);
+                return modal;
+            }
 
             // Notification and Message Panel Functions
             function showNotificationPanel() {
