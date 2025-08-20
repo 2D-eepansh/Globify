@@ -10,6 +10,105 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* ==== Global Styles ==== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #1f2937;
+  color: #f3f4f6;
+  line-height: 1.6;
+}
+
+/* ==== Developer Section ==== */
+.developer-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.developer-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.developer-section p {
+  font-size: 1.1rem;
+  color: #d1d5db;
+  margin-bottom: 40px;
+}
+
+/* ==== Developer Cards ==== */
+.developer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.developer-card {
+  background: #273549;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.developer-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.developer-card img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #3b82f6;
+}
+
+.developer-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.developer-card span {
+  display: block;
+  font-size: 0.95rem;
+  color: #9ca3af;
+  margin-bottom: 15px;
+}
+
+.developer-card p {
+  font-size: 0.95rem;
+  color: #d1d5db;
+  margin-bottom: 20px;
+}
+
+/* ==== Social Links ==== */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-links a {
+  color: #f3f4f6;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #3b82f6;
+}
+
         body {
             background-color: var(--bg-charcoal);
             color: var(--white-text);
@@ -100,7 +199,7 @@
 
         .match-card-container {
             position: relative;
-            height: 500px;
+            height: 700px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -110,6 +209,7 @@
         .match-card {
             width: 100%;
             max-width: 400px;
+            height : 730px
             background: linear-gradient(145deg, rgba(13, 13, 13, 0.9), rgba(212, 175, 55, 0.05));
             border: 3px solid var(--gold-primary);
             border-radius: 25px;
@@ -488,11 +588,17 @@
                 padding: 0.6rem 1rem;
                 font-size: 0.9rem;
             }
+            .developer-section h1 {
+                font-size: 2rem;
+            }
+            .developer-section p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <a href="dashboard-new.html" class="back-to-dashboard">
+    <a href="/beta/dashboard-new.html" class="back-to-dashboard">
         <i class="fas fa-arrow-left"></i>
         Back to Dashboard
     </a>
